@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="project.capstone6.acne_diagnosis.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,6 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="1dp"
-        tools:listitem="@layout/news_feeds" />
+        tools:listitem="@layout/activity_ads" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

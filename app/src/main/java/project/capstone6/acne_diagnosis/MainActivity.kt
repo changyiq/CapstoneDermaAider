@@ -4,9 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +12,6 @@ import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myNewsList = generateNewsList(4)
+        val myNewsList = generateNewsList(6)
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.adapter = MyRecyclerView(myNewsList)
@@ -34,24 +30,36 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun generateNewsList(size: Int): List<NewsFeeds> {
+    private fun generateNewsList(size: Int): List<HomePageModel> {
 
-        val list = ArrayList<NewsFeeds>()
+        val list = ArrayList<HomePageModel>()
 
-        for (i in 0 until size) {
-            val drawable = when (i % 3) {
-                0 -> R.drawable.img1
-                1 -> R.drawable.img2
-                else -> R.drawable.img3
+        for (i in 1 until size) {
+            val drawable = when (i % 5) {
+                0 -> R.drawable.panoxyl_acne_creamy_wash
+                1 -> R.drawable.medical_
+                2 -> R.drawable.la_roche_acne_treatment
+                3 -> R.drawable.differin_adapalene_gel
+                else -> R.drawable.cerave_facial_moisturizing_lotion
             }
 
-            val newsFeed = when (i % 3) {
-                0 -> getString(R.string.feed1)
-                1 -> getString(R.string.feed2)
-                else -> getString(R.string.feed3)
+            val adsTitle = when (i % 5) {
+                0 -> getString(R.string.adsTitle1)
+                1 -> getString(R.string.adsTitle2)
+                2 -> getString(R.string.adsTitle3)
+                3 -> getString(R.string.adsTitle4)
+                else -> getString(R.string.adsTitle5)
             }
 
-            val item = NewsFeeds(drawable, newsFeed)
+            val adsContent = when (i % 3) {
+                0 -> getString(R.string.adsContent1)
+                1 -> getString(R.string.adsContent2)
+                2 -> getString(R.string.adsContent3)
+                3 -> getString(R.string.adsContent4)
+                else -> getString(R.string.adsContent5)
+            }
+
+            val item = HomePageModel(drawable, adsTitle, adsContent)
 
             list += item
         }
@@ -85,6 +93,7 @@ class MainActivity : AppCompatActivity() {
             super.onOptionsItemSelected(item)
         }
     }
+
     // menu option to log out
     fun logOut() {
 

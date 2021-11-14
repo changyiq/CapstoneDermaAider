@@ -8,14 +8,15 @@
     <string name="redo_analysis">Redo Analysis</string>
     <string name="link1"><u></u></string>
     <string name="link2"><u></u></string>
-    <string name="feed1">Integer malesuada a lorem at ornare.
-        In elementum est eu massa malesuada, a tempor ipsum placerat. Ut pretium diam est.
-        Praesent a massa ultrices.</string>
-    <string name="feed2">Suspendisse feugiat mollis nisi, sit amet vehicula urna mollis sed. Mauris
-        ornare felis ut pellentesque aliquet. Nunc hendrerit leo a scelerisque efficitur. Fusce vel
-        ex imperdiet, ultrices nisl ut, luctus risus. In fringilla eget massa sed tempus. Aenean
-        gravida tortor lacus, ut interdum massa pharetra vitae. </string>
-    <string name="feed3">Suspendisse feugiat mollis nisi, sit amet vehicula urna mollis sed. Mauris
-        ornare felis ut pellentesque aliquet.  </string>
+    <string name="adsContent1">“This is a good benzoyl peroxide wash that many patients really like,” says Dr. Sivendran. It contains 4 percent benzoyl peroxide to kill pimple-producing bacteria. The lower concentration of benzoyl peroxide in this wash (you can buy products that have almost 10 percent) is often less drying on skin, too.</string>
+    <string name="adsContent2">Acne is a common skin condition and there are many ways to treat it.  While mild acne may be easy to control with proper skin care and over-the-counter remedies, you will need to see a doctor to treat moderate or severe acne. Always remember, some treatments should be used with caution.</string>
+    <string name="adsContent3">The 5.5 percent benzoyl peroxide in this spot treatment offers stronger bacteria-killing power for normal skin types that can handle it. It also teams up with lipohydroxy acid (LHA), an ingredient that lightly exfoliates skin to keep pores free of future clogs, as a study published in The Journal of Clinical and Aesthetic Dermatology discovered. </string>
+    <string name="adsContent4">You’d be hard-pressed to find a derm who won’t tell you to run to the drugstore to pick up this retinoid. It is the only adapalene gel available without a prescription. Retinoids (vitamin A derivatives that speed cell turnover) can treat acne by exfoliating the skin to prevent clogged pores, says Dr. Meinhardt, who recommends Differin to patients.</string>
+    <string name="adsContent5">All of the dermatologists we talked to rave about CeraVe—and testers agree. This cult favorite moisturizer with SPF is a total winner for acne-prone skin, since it contains hydrating ceramides and hyaluronic acid, redness-reducing niacinamide, and SPF 30 for extra sun protection.</string>
+    <string name="adsTitle1">PanOxyl 4% Acne Creamy Wash</string>
+    <string name="adsTitle2">Acne treatments</string>
+    <string name="adsTitle3">La Roche-Posay Effaclar Duo Dual Action Acne Treatment</string>
+    <string name="adsTitle4">Differin Adapalene Gel 0.1% Acne Treatment</string>
+    <string name="adsTitle5">CeraVe AM Facial Moisturizing Lotion AM SPF 30</string>
 
 </resources>
