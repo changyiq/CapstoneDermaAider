@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Skin_Diagnosis</string>
+    <string name="app_name">Derma Aider</string>
     <string name="take_selfie">Take Selfie</string>
     <string name="diagnosis">Diagnosis</string>
     <string name="todo">TODO</string>

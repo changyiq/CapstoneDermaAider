@@ -25,8 +25,8 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="280dp"
+        android:layout_width="406dp"
+        android:layout_height="222dp"
         android:layout_marginTop="60dp"
         android:contentDescription="@string/todo"
         app:layout_constraintStart_toStartOf="parent"
