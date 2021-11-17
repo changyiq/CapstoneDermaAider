@@ -51,6 +51,7 @@
         android:text="Don't worry, we've got you back"
         android:textAlignment="center"
         android:textColor="#5C5A5A"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/tv2"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/tv2"

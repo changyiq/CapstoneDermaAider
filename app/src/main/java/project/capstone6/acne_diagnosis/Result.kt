@@ -2,11 +2,15 @@ package project.capstone6.acne_diagnosis
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
+import android.text.Spanned
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -38,8 +42,10 @@ class Result : AppCompatActivity() {
     private lateinit var picPath: String
     private lateinit var symptom: String
     private lateinit var linkList: List<String>
+    private lateinit var linkList2: List<String>
     private lateinit var receivedImage: ByteArray
     private lateinit var resultFromResponse: String
+    private lateinit var tv6: TextView
 
     var firebaseAuth: FirebaseAuth? = null
 
@@ -56,9 +62,11 @@ class Result : AppCompatActivity() {
         hybirdLink2 = binding3.medicalRtv2
         symptom = ""
         linkList = listOf()
+        linkList2 = listOf()
         skinProblem = binding3.skinProblem
         resultFromResponse = ""
         receivedImage = byteArrayOf()
+        tv6 = binding3.tv6
 
         //Get intent obj
         val intent = getIntent()
@@ -134,11 +142,12 @@ class Result : AppCompatActivity() {
                                         //symptom = SymptomEnum.AR.symptom
                                         myRef.child(uid.toString()).child("result").setValue(symptom)
                                         if (getWebsite(symptom).isNotEmpty()) {
+                                            tv6.visibility = View.INVISIBLE
                                             if (getWebsite(symptom).size > 1) {
-                                                hybirdLink1.text = getWebsite(symptom)[0]
-                                                hybirdLink2.text = getWebsite(symptom)[1]
+                                                hybirdLink1.text = setTextHtml("<a href=\"${getWebsite(symptom)[0]}\">${getTitle(symptom)[0]}</a>")
+                                                hybirdLink2.text = setTextHtml("<a href=\"${getWebsite(symptom)[1]}\">${getTitle(symptom)[1]}</a>")
                                             }
-                                            hybirdLink1.text = getWebsite(symptom)[0]
+                                            hybirdLink1.text = setTextHtml("<a href=\"${getWebsite(symptom)[0]}\">${getTitle(symptom)[0]}</a>")
                                             // pass the url info based on the clicked link
                                             val intent = Intent(this, Website::class.java)
                                             hybirdLink1.setOnClickListener() {
@@ -158,6 +167,7 @@ class Result : AppCompatActivity() {
                                         }
 
                                     }else {
+                                        tv6.visibility = View.VISIBLE
                                         skinProblem.text = "You have not made any analysis"
                                         Toast.makeText(this, "You have not made any analysis", Toast.LENGTH_SHORT).show()
                                     }
@@ -193,10 +203,12 @@ class Result : AppCompatActivity() {
                                 myRef.child(uid.toString()).child("result").setValue(symptom)
                                 if (getWebsite(symptom).isNotEmpty()) {
                                     if (getWebsite(symptom).size > 1) {
-                                        hybirdLink1.text = getWebsite(symptom)[0]
-                                        hybirdLink2.text = getWebsite(symptom)[1]
+                                        hybirdLink1.text = setTextHtml("<a href=\"${getWebsite(symptom)[0]}\">${getTitle(symptom)[0]}</a>")
+                                        Log.e("Link of 2------->", hybirdLink1.text.toString())
+                                        hybirdLink2.text = setTextHtml("<a href=\"${getWebsite(symptom)[1]}\">${getTitle(symptom)[1]}</a>")
                                     }
-                                    hybirdLink1.text = getWebsite(symptom)[0]
+                                    hybirdLink1.text = setTextHtml("<a href=\"${getWebsite(symptom)[0]}\">${getTitle(symptom)[0]}</a>")
+                                    Log.e("Link of 1------->", hybirdLink1.text.toString())
                                     // pass the url info based on the clicked link
                                     val intent = Intent(this, Website::class.java)
                                     hybirdLink1.setOnClickListener() {
@@ -236,34 +248,165 @@ class Result : AppCompatActivity() {
 
     }
 
+    fun setTextHtml(html: String): Spanned {
+        val result: Spanned = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            Html.fromHtml(html)
+        }
+        return result
+    }
+
     // get website links based on the symptom using enum classes
     private fun getWebsite(sym: String): List<String> {
         when(sym){
-            SymptomEnum.AD.symptom -> linkList = listOf(MedicalResourcesEnum.AD.website)
-            SymptomEnum.AM.symptom -> linkList = listOf(MedicalResourcesEnum.AM.website)
-            SymptomEnum.AR.symptom -> linkList = listOf(MedicalResourcesEnum.AR1.website, MedicalResourcesEnum.AR2.website)
-            SymptomEnum.BD.symptom -> linkList = listOf(MedicalResourcesEnum.BD.website)
-            SymptomEnum.CI.symptom -> linkList = listOf(MedicalResourcesEnum.CI.website)
-            SymptomEnum.EC.symptom -> linkList = listOf(MedicalResourcesEnum.EC.website)
-            SymptomEnum.EDE.symptom -> linkList = listOf(MedicalResourcesEnum.EDE.website)
-            SymptomEnum.HAIR.symptom -> linkList = listOf(MedicalResourcesEnum.HAIR.website)
-            SymptomEnum.HPV.symptom -> linkList = listOf(MedicalResourcesEnum.HPV.website)
-            SymptomEnum.PI.symptom -> linkList = listOf(MedicalResourcesEnum.PI.website)
-            SymptomEnum.CTD.symptom -> linkList = listOf(MedicalResourcesEnum.CTD.website)
-            SymptomEnum.MM.symptom -> linkList = listOf(MedicalResourcesEnum.MM1.website, MedicalResourcesEnum.MM2.website)
-            SymptomEnum.NAIL.symptom -> linkList = listOf(MedicalResourcesEnum.NAIL.website)
-            SymptomEnum.CD.symptom -> linkList = listOf(MedicalResourcesEnum.CD.website)
-            SymptomEnum.PSO.symptom -> linkList = listOf(MedicalResourcesEnum.PSO.website)
-            SymptomEnum.SLD.symptom -> linkList = listOf(MedicalResourcesEnum.SLD.website)
-            SymptomEnum.SK.symptom -> linkList = listOf(MedicalResourcesEnum.SK.website)
-            SymptomEnum.SD.symptom -> linkList = listOf(MedicalResourcesEnum.SD.website)
-            SymptomEnum.TRC.symptom -> linkList = listOf(MedicalResourcesEnum.TRC.website)
-            SymptomEnum.UH.symptom -> linkList = listOf(MedicalResourcesEnum.UH.website)
-            SymptomEnum.VP.symptom -> linkList = listOf(MedicalResourcesEnum.VP.website)
-            SymptomEnum.VT.symptom -> linkList = listOf(MedicalResourcesEnum.VT.website)
-            SymptomEnum.WM.symptom -> linkList = listOf(MedicalResourcesEnum.WM.website)
+            SymptomEnum.AD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.AD.website)
+            }
+            SymptomEnum.AM.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.AM.website)
+            }
+            SymptomEnum.AR.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.AR1.website, MedicalResourcesEnum.AR2.website)
+            }
+            SymptomEnum.BD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.BD.website)
+            }
+            SymptomEnum.CI.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.CI.website)
+            }
+            SymptomEnum.EC.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.EC.website)
+            }
+            SymptomEnum.EDE.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.EDE.website)
+            }
+            SymptomEnum.HAIR.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.HAIR.website)
+            }
+            SymptomEnum.HPV.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.HPV.website)
+            }
+            SymptomEnum.PI.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.PI.website)
+            }
+            SymptomEnum.CTD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.CTD.website)
+            }
+            SymptomEnum.MM.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.MM1.website, MedicalResourcesEnum.MM2.website)
+            }
+            SymptomEnum.NAIL.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.NAIL.website)
+            }
+            SymptomEnum.CD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.CD.website)
+            }
+            SymptomEnum.PSO.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.PSO.website)
+            }
+            SymptomEnum.SLD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.SLD.website)
+            }
+            SymptomEnum.SK.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.SK.website)
+            }
+            SymptomEnum.SD.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.SD.website)
+            }
+            SymptomEnum.TRC.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.TRC.website)
+            }
+            SymptomEnum.UH.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.UH.website)
+            }
+            SymptomEnum.VP.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.VP.website)
+            }
+            SymptomEnum.VT.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.VT.website)
+            }
+            SymptomEnum.WM.symptom -> {
+                linkList = listOf(MedicalResourcesEnum.WM.website)
+            }
         }
         return  linkList
+    }
+
+    // get website titles based on the symptom using enum classes
+    private fun getTitle(sym: String): List<String> {
+        when(sym){
+            SymptomEnum.AD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.AD.title)
+            }
+            SymptomEnum.AM.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.AM.title)
+            }
+            SymptomEnum.AR.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.AR1.title, MedicalResourcesEnum.AR2.title)
+            }
+            SymptomEnum.BD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.BD.title)
+            }
+            SymptomEnum.CI.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.CI.title)
+            }
+            SymptomEnum.EC.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.EC.title)
+            }
+            SymptomEnum.EDE.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.EDE.title)
+            }
+            SymptomEnum.HAIR.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.HAIR.title)
+            }
+            SymptomEnum.HPV.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.HPV.title)
+            }
+            SymptomEnum.PI.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.PI.title)
+            }
+            SymptomEnum.CTD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.CTD.title)
+            }
+            SymptomEnum.MM.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.MM1.title, MedicalResourcesEnum.MM2.title)
+            }
+            SymptomEnum.NAIL.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.NAIL.title)
+            }
+            SymptomEnum.CD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.CD.title)
+            }
+            SymptomEnum.PSO.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.PSO.title)
+            }
+            SymptomEnum.SLD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.SLD.title)
+            }
+            SymptomEnum.SK.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.SK.title)
+            }
+            SymptomEnum.SD.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.SD.title)
+            }
+            SymptomEnum.TRC.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.TRC.title)
+            }
+            SymptomEnum.UH.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.UH.title)
+            }
+            SymptomEnum.VP.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.VP.title)
+            }
+            SymptomEnum.VT.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.VT.title)
+            }
+            SymptomEnum.WM.symptom -> {
+                linkList2 = listOf(MedicalResourcesEnum.WM.title)
+            }
+        }
+        return  linkList2
     }
 
     /**

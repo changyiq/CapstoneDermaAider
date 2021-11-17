@@ -214,19 +214,18 @@ class TakeSelfie : AppCompatActivity() {
               Response.Listener { response ->
                 // Process the json
                 try {
-                    //textView.text = "Response: $response"
                     responseFromApi = response.toString()
-
-                    // debugging
-                    Log.e("Response in takeSelfie-----------", responseFromApi)
-                    /**
-                     * WAITING FOR CONFIGURE
-                     */
-                    Toast.makeText(
-                        this,
-                        "Response: \nPath are posted to API. \n${responseFromApi} \n Acne and Rosacea Photos",
-                        Toast.LENGTH_LONG
-                    ).show()
+//
+//                    // debugging
+//                    Log.e("Response in takeSelfie-----------", responseFromApi)
+//                    /**
+//                     * WAITING FOR CONFIGURE
+//                     */
+//                    Toast.makeText(
+//                        this,
+//                        "Response: \nPath are posted to API. \n${responseFromApi} \n Acne and Rosacea Photos",
+//                        Toast.LENGTH_LONG
+//                    ).show()
                 } catch (e: Exception) {
                     Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
