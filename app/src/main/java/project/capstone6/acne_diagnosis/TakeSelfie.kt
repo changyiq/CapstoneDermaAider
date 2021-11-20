@@ -107,7 +107,17 @@ class TakeSelfie : AppCompatActivity() {
 
                 //upload image to API by Volley
                 postImageByVolley(takenImage)
-                Log.w("Response in takeSelfie btnClick-----------", responseFromApi)
+                // Write a message to the database
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference("Users")
+
+                // get current logged in user
+                val user = FirebaseAuth.getInstance().currentUser
+                val uid = user?.uid
+
+                // set default result
+                myRef.child(uid.toString()).child("result").setValue("")
+
                 intent.putExtra(RESPONSE_BY_API, responseFromApi)
 
                 // pass image
@@ -215,17 +225,6 @@ class TakeSelfie : AppCompatActivity() {
                 // Process the json
                 try {
                     responseFromApi = response.toString()
-//
-//                    // debugging
-//                    Log.e("Response in takeSelfie-----------", responseFromApi)
-//                    /**
-//                     * WAITING FOR CONFIGURE
-//                     */
-//                    Toast.makeText(
-//                        this,
-//                        "Response: \nPath are posted to API. \n${responseFromApi} \n Acne and Rosacea Photos",
-//                        Toast.LENGTH_LONG
-//                    ).show()
                 } catch (e: Exception) {
                     Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
