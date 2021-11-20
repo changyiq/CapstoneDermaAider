@@ -102,11 +102,9 @@ class Result : AppCompatActivity() {
         // pass image to analyze
         getUser()
         if (receivedImage.isNotEmpty()) {
-            Log.e("7-------", "7")
             getResultFromVolley(receivedImage)
             loadResult()
         }else{
-            Log.e("8-------", "8")
             loadResult()
         }
 
@@ -127,7 +125,7 @@ class Result : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun loadResult() {
 
-        Log.e("In the loadresult-------", skinProblem.text.toString())
+        Log.e("In the loadresult-------", resultFromResponse)
 
         // Write a message to the database
         val database = FirebaseDatabase.getInstance()
@@ -143,16 +141,13 @@ class Result : AppCompatActivity() {
                 if (!myRef.child(uid!!).child("result").equals("")) {
                     myRef.child(uid.toString()).child("result").get().addOnSuccessListener {
                         if (it.exists()) {
-                            Log.e("4-------", "4")
-                            skinProblem.text = it.value.toString()
+                            skinProblem.text = "Acne and Rosacea Photos"
                             tv6.visibility = View.INVISIBLE
-                            Log.e("5.5-------",skinProblem.text.toString() )
                             // code to get the response from api and filter the keyword of the symptom and provide user
                             // medical resources
                             for (sym in SymptomEnum.values()) {
                                 val temp = sym.symptom
-                                Log.e("5.5-------", sym.symptom)
-                                if (skinProblem.text.contains(temp)) {
+                                if (skinProblem.text.toString().contains(temp)) {
                                     Log.e("5.5-------", "5.5")
                                     symptom = sym.symptom
                                     //Get column from the table
@@ -272,8 +267,9 @@ class Result : AppCompatActivity() {
                 // medical resources
                 tv6.visibility = View.INVISIBLE
                 for (sym in SymptomEnum.values()) {
+                    val temp = sym.symptom
                     Log.e("1-------", "1")
-                    if (resultFromResponse.contains(sym.symptom)) {
+                    if (resultFromResponse.contains(temp)) {
                         Log.e("2-------", "2")
                         symptom = sym.symptom
                         //Get column from the table
@@ -569,7 +565,7 @@ class Result : AppCompatActivity() {
                     Log.e("10-------", "10")
                     // pass value on UI textView from received result
                     skinProblem.text = "Acne and Rosacea Photos"
-                    resultFromResponse = skinProblem.text.toString()
+                    resultFromResponse = "Acne and Rosacea Photos"
                     myRef.child(uid.toString()).child("result").setValue(resultFromResponse)
 //                    skinProblem.text = response.toString()
                     /**
