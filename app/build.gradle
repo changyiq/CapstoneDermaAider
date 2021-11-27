@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'com.google.gms.google-services'
+    id 'kotlin-android-extensions'
+
+    id 'kotlin-kapt'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -73,6 +77,15 @@ dependencies {
     // upload file to rest api
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+
+    //ViewPager2
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    //Circle Indicator (ViewPager2)
+    implementation 'me.relex:circleindicator:2.1.4'
+
+    // Anko Commons
+    implementation "org.jetbrains.anko:anko-commons:0.10.5"
 
     implementation group: 'org.apache.httpcomponents' , name: 'httpclient-android' , version: '4.3.5.1'
     implementation('org.apache.httpcomponents:httpmime:4.3') {

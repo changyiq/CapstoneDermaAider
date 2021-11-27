@@ -16,17 +16,37 @@ import com.google.firebase.auth.FirebaseAuth
 class MainActivity : AppCompatActivity() {
 
     var firebaseAuth: FirebaseAuth? = null
+    private var userFirstTime = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myNewsList = generateNewsList(6)
+        //Checks whether it's the users first time
+        loadData()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = MyRecyclerView(myNewsList)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.setHasFixedSize(true)
+        //If it's the users first time, it will go to the introduction page. Otherwise, it will go to the taking picture page
+        if (userFirstTime) {
+
+            userFirstTime = false
+            saveData()
+
+            val i1 = Intent(this, IntroActivity::class.java)
+            startActivity(i1)
+            finish()
+        } else {
+
+            val i2 = Intent(this, TakeSelfie::class.java)
+            startActivity(i2)
+            finish()
+        }
+
+//        val myNewsList = generateNewsList(6)
+
+//        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+//        recyclerView.adapter = MyRecyclerView(myNewsList)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.setHasFixedSize(true)
 
     }
 
@@ -121,6 +141,19 @@ class MainActivity : AppCompatActivity() {
         firebaseAuth!!.signOut()
         LoginManager.getInstance().logOut()
         finish()
+    }
+
+    private fun saveData() {
+        val sp = getSharedPreferences("SHARED_PREFS", MODE_PRIVATE)
+        sp.edit().apply {
+            putBoolean("BOOLEAN_FIRST_TIME", userFirstTime)
+            apply()
+        }
+    }
+
+    private fun loadData() {
+        val sp = getSharedPreferences("SHARED_PREFS", MODE_PRIVATE)
+        userFirstTime = sp.getBoolean("BOOLEAN_FIRST_TIME", true)
     }
 
 

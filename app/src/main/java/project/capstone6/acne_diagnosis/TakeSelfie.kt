@@ -29,11 +29,13 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 import android.annotation.SuppressLint
+import android.view.View
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import javax.net.ssl.*
 
 import com.android.volley.toolbox.Volley
+import kotlinx.android.synthetic.main.activity_intro.*
 
 private const val FILE_NAME = "selfie"
 
@@ -83,6 +85,9 @@ class TakeSelfie : AppCompatActivity() {
 
         //click the button to invoke an intent to take a selfie
         btnTakeSelfie.setOnClickListener() {
+
+            btnDiagnosis.visibility = View.VISIBLE
+
             val takeSelfieIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = getPhotoFile(FILE_NAME)
 
@@ -96,6 +101,7 @@ class TakeSelfie : AppCompatActivity() {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_LONG).show()
             }
         }
+
         btnDiagnosis.setOnClickListener {
 
             if (subDir != "" && subDir != null) {
@@ -134,8 +140,11 @@ class TakeSelfie : AppCompatActivity() {
             }else {
 
                 // Tell user to wait
-                Toast.makeText(this,"Please take selfie for skin, or check for your history analysis.",Toast.LENGTH_LONG).show()
-            }        }
+                //Toast.makeText(this,"Please take selfie for skin, or check for your history analysis.",Toast.LENGTH_LONG).show()
+            }
+
+            btnDiagnosis.visibility = View.GONE
+        }
     }
 
     //to create a file for the selfie
@@ -227,15 +236,11 @@ class TakeSelfie : AppCompatActivity() {
                 try {
                     responseFromApi = response.toString()
                 } catch (e: Exception) {
-                    Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
+                   Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
 
             },Response.ErrorListener { volleyError ->
-                Toast.makeText(
-                    this@TakeSelfie,
-                    "Some error occurred -> $volleyError",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(this@TakeSelfie,"Some error occurred -> $volleyError", Toast.LENGTH_LONG).show()
                 // debugging
                 Log.e("Volley Error-----------", "${volleyError.cause}")
                 Log.e("Volley Error-----------", "${volleyError.message}")
@@ -276,7 +281,7 @@ class TakeSelfie : AppCompatActivity() {
             true
         }
         R.id.action_homepage -> {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
             true
         }

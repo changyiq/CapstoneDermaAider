@@ -18,5 +18,9 @@
     <string name="adsTitle3">La Roche-Posay Effaclar Duo Dual Action Acne Treatment</string>
     <string name="adsTitle4">Differin Adapalene Gel 0.1% Acne Treatment</string>
     <string name="adsTitle5">CeraVe AM Facial Moisturizing Lotion AM SPF 30</string>
+    <string name="intro1">Welcome to <b><i>Derma Aider</i></b> APP!</string>
+    <string name="intro2">This app is to identify the skin disease by comparing thousands of datasets using machine learning.</string>
+    <string name="intro3">Just only take <b><i>1 picture</i></b>, press <b><i>1 button</i></b>, then get the result within <b><i>1 minute</i></b>.</string>
+    <string name="intro4">Tap on the button below to get started with using the app!</string>
 
 </resources>

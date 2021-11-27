@@ -32,6 +32,9 @@
             android:name=".MainActivity"
             android:exported="true" />
         <activity
+            android:name=".IntroActivity"
+            android:exported="true" />
+        <activity
             android:name=".TestActivity"
             android:exported="true" />
 

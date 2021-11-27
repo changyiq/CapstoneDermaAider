@@ -3,9 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable-v24/ic_app.xml" value="0.2703125" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable-v24/ic_food_bank.xml" value="0.2703125" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable/round_button.xml" value="0.13148148148148148" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_intro.xml" value="0.152" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_result.xml" value="0.15760869565217392" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_take_selfie.xml" value="0.25" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/intro_item_page.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/menu/menu.xml" value="0.15260416666666668" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/menu/takeselfiemenu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Acne_Diagnosis/app/src/main/res/layout/activity_main.xml" value="0.10914855072463768" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Acne_Diagnosis/app/src/main/res/layout/activity_result.xml" value="0.20018115942028986" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/Acne_Diagnosis/app/src/main/res/layout/activity_take_selfie.xml" value="0.10914855072463768" />
@@ -48,7 +54,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_15" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
