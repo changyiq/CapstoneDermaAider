@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Derma Aider</string>
     <string name="take_selfie">Take Selfie</string>
-    <string name="diagnosis">Diagnosis</string>
+    <string name="identify">Identify</string>
     <string name="todo">TODO</string>
     <string name="facebook_app_id">583949306361746</string>
     <string name="fb_login_protocol_scheme">fb583949306361746</string>
