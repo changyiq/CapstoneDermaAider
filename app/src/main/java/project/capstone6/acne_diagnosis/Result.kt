@@ -11,6 +11,8 @@ import android.text.Spanned
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import com.android.volley.AuthFailureError
@@ -624,4 +626,38 @@ class Result : AppCompatActivity() {
         LoginManager.getInstance().logOut()
         finish()
     }
+
+    //process menu
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.resultmenu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_products -> {
+            val intent = Intent(this, ProductActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
+        R.id.action_picture -> {
+            val intent = Intent(this, TakeSelfie::class.java)
+            startActivity(intent)
+            true
+        }
+        R.id.action_intro -> {
+            val intent = Intent(this, IntroActivity::class.java)
+            startActivity(intent)
+            true
+        }
+        R.id.action_exit -> {
+            logOut()
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
+
 }
