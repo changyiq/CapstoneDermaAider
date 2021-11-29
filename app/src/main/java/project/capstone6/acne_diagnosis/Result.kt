@@ -1,6 +1,7 @@
 package project.capstone6.acne_diagnosis
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Intent
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity

@@ -91,4 +91,7 @@ dependencies {
     implementation('org.apache.httpcomponents:httpmime:4.3') {
         exclude module: "httpclient"
     }
+
+    implementation 'com.google.android.gms:play-services-ads:19.3.0'
+
 }

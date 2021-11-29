@@ -5,7 +5,10 @@
         android:id="@+id/action_result"
         android:title="Check my result" />
     <item
-        android:id="@+id/action_homepage"
+        android:id="@+id/action_products"
+        android:title="Products recomandation" />
+    <item
+        android:id="@+id/action_intro"
         android:title="Back to Introduction Page"/>
     <item
         android:id="@+id/action_exit"

@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class MyRecyclerView(private val adsList: List<HomePageModel>) :
+class MyRecyclerView(private val adsList: List<ProductsModel>) :
     RecyclerView.Adapter<MyRecyclerView.MyViewHolder>() {
 
 
@@ -29,13 +29,9 @@ class MyRecyclerView(private val adsList: List<HomePageModel>) :
     override fun getItemCount() = adsList.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
         val currentItem = adsList[position]
-
         holder.imageView.setImageResource(currentItem.imageResource)
         holder.adsTitle.text = currentItem.adsTitle
         holder.adsView.text = currentItem.adsContent
     }
-
-
 }

@@ -288,12 +288,18 @@ class TakeSelfie : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_products -> {
+            val intent = Intent(this, ProductActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
         R.id.action_result -> {
             val intent = Intent(this, Result::class.java)
             startActivity(intent)
             true
         }
-        R.id.action_homepage -> {
+        R.id.action_intro -> {
             val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
             true
