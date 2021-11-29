@@ -8,7 +8,15 @@
         android:id="@+id/action_analyze"
         android:title="Analyze my skin condition"/>
     <item
+        android:id="@+id/action_intro"
+        android:title="Back to Introduction Page"/>
+    <item
         android:id="@+id/action_exit"
         android:title="Exit"/>
+
+
+
+
+
 
 </menu>

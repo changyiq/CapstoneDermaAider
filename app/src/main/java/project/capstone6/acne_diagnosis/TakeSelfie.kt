@@ -81,7 +81,7 @@ class TakeSelfie : AppCompatActivity() {
         val currentUser = firebaseAuth!!.currentUser
 
         //clear subDir
-        subDir =""
+        subDir = ""
 
         //click the button to invoke an intent to take a selfie
         btnTakeSelfie.setOnClickListener() {
@@ -137,7 +137,7 @@ class TakeSelfie : AppCompatActivity() {
                 intent.putExtra(EXTRA_SUBDIRECTORY, subDir)
 
                 startActivity(intent)
-            }else {
+            } else {
 
                 // Tell user to wait
                 //Toast.makeText(this,"Please take selfie for skin, or check for your history analysis.",Toast.LENGTH_LONG).show()
@@ -179,7 +179,7 @@ class TakeSelfie : AppCompatActivity() {
             myRef.child(uid.toString()).get().addOnSuccessListener {
                 if (it.child("image").exists()) {
                     myRef.child(uid.toString()).child("image").setValue(fullDir)
-                }else if (!it.child("image").exists()){
+                } else if (!it.child("image").exists()) {
                     myRef.child(uid.toString()).child("image").setValue(fullDir)
                     //myRef.child(uid.toString()).child("result").setValue(SymptomEnum.AD)
                 }
@@ -200,8 +200,18 @@ class TakeSelfie : AppCompatActivity() {
                     val acceptedIssuers: Array<Any?>?
                         get() = arrayOfNulls(0)
 
-                    override fun checkClientTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
-                    override fun checkServerTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
+                    override fun checkClientTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    override fun checkServerTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
                     override fun getAcceptedIssuers(): Array<X509Certificate> {
                         TODO("Not yet implemented")
                     }
@@ -220,7 +230,7 @@ class TakeSelfie : AppCompatActivity() {
 
     // send http post request to communicate with api and get the response with its header
     fun postImageByVolley(image: Bitmap) {
-       // val url2: String = "https://10.0.2.2:5001/api/Image"
+        // val url2: String = "https://10.0.2.2:5001/api/Image"
         val url2: String = "https://localhost:44374/api/Image"
 
         //converting image to bytes/base64 string
@@ -231,16 +241,20 @@ class TakeSelfie : AppCompatActivity() {
         //sending image to server
         val request2: VolleyMultipartRequest = object : VolleyMultipartRequest(
             Method.POST, url2,
-              Response.Listener { response ->
+            Response.Listener { response ->
                 // Process the json
                 try {
                     responseFromApi = response.toString()
                 } catch (e: Exception) {
-                   Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
 
-            },Response.ErrorListener { volleyError ->
-                Toast.makeText(this@TakeSelfie,"Some error occurred -> $volleyError", Toast.LENGTH_LONG).show()
+            }, Response.ErrorListener { volleyError ->
+                Toast.makeText(
+                    this@TakeSelfie,
+                    "Some error occurred -> $volleyError",
+                    Toast.LENGTH_LONG
+                ).show()
                 // debugging
                 Log.e("Volley Error-----------", "${volleyError.cause}")
                 Log.e("Volley Error-----------", "${volleyError.message}")
@@ -275,12 +289,18 @@ class TakeSelfie : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_products -> {
+            val intent = Intent(this, ProductActivity::class.java)
+            startActivity(intent)
+            true
+        }
+
         R.id.action_result -> {
             val intent = Intent(this, Result::class.java)
             startActivity(intent)
             true
         }
-        R.id.action_homepage -> {
+        R.id.action_intro -> {
             val intent = Intent(this, IntroActivity::class.java)
             startActivity(intent)
             true

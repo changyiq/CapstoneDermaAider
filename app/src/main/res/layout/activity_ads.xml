@@ -59,6 +59,5 @@
             android:text="@string/adsContent1"
             app:layout_constraintStart_toEndOf="@+id/img"
             app:layout_constraintTop_toBottomOf="@+id/adsTitle" />
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
