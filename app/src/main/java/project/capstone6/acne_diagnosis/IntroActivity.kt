@@ -1,15 +1,11 @@
 package project.capstone6.acne_diagnosis
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_intro.*
-import project.capstone6.acne_diagnosis.IntroView
-import project.capstone6.acne_diagnosis.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
 

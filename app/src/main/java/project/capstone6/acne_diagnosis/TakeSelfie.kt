@@ -1,5 +1,6 @@
 package project.capstone6.acne_diagnosis
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -19,23 +21,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
+import com.android.volley.toolbox.Volley
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_intro.*
 import project.capstone6.acne_diagnosis.databinding.ActivityTakeSelfieBinding
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.util.*
-import android.annotation.SuppressLint
-import android.view.View
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
+import java.util.*
 import javax.net.ssl.*
-
-import com.android.volley.toolbox.Volley
-import kotlinx.android.synthetic.main.activity_intro.*
 
 private const val FILE_NAME = "selfie"
 
@@ -81,7 +80,7 @@ class TakeSelfie : AppCompatActivity() {
         val currentUser = firebaseAuth!!.currentUser
 
         //clear subDir
-        subDir =""
+        subDir = ""
 
         //click the button to invoke an intent to take a selfie
         btnTakeSelfie.setOnClickListener() {
@@ -137,7 +136,7 @@ class TakeSelfie : AppCompatActivity() {
                 intent.putExtra(EXTRA_SUBDIRECTORY, subDir)
 
                 startActivity(intent)
-            }else {
+            } else {
 
                 // Tell user to wait
                 //Toast.makeText(this,"Please take selfie for skin, or check for your history analysis.",Toast.LENGTH_LONG).show()
@@ -179,7 +178,7 @@ class TakeSelfie : AppCompatActivity() {
             myRef.child(uid.toString()).get().addOnSuccessListener {
                 if (it.child("image").exists()) {
                     myRef.child(uid.toString()).child("image").setValue(fullDir)
-                }else if (!it.child("image").exists()){
+                } else if (!it.child("image").exists()) {
                     myRef.child(uid.toString()).child("image").setValue(fullDir)
                     //myRef.child(uid.toString()).child("result").setValue(SymptomEnum.AD)
                 }
@@ -200,8 +199,18 @@ class TakeSelfie : AppCompatActivity() {
                     val acceptedIssuers: Array<Any?>?
                         get() = arrayOfNulls(0)
 
-                    override fun checkClientTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
-                    override fun checkServerTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
+                    override fun checkClientTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    override fun checkServerTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
                     override fun getAcceptedIssuers(): Array<X509Certificate> {
                         TODO("Not yet implemented")
                     }
@@ -220,7 +229,7 @@ class TakeSelfie : AppCompatActivity() {
 
     // send http post request to communicate with api and get the response with its header
     fun postImageByVolley(image: Bitmap) {
-       // val url2: String = "https://10.0.2.2:5001/api/Image"
+        // val url2: String = "https://10.0.2.2:5001/api/Image"
         val url2: String = "https://localhost:44374/api/Image"
 
         //converting image to bytes/base64 string
@@ -231,16 +240,20 @@ class TakeSelfie : AppCompatActivity() {
         //sending image to server
         val request2: VolleyMultipartRequest = object : VolleyMultipartRequest(
             Method.POST, url2,
-              Response.Listener { response ->
+            Response.Listener { response ->
                 // Process the json
                 try {
                     responseFromApi = response.toString()
                 } catch (e: Exception) {
-                   Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
 
-            },Response.ErrorListener { volleyError ->
-                Toast.makeText(this@TakeSelfie,"Some error occurred -> $volleyError", Toast.LENGTH_LONG).show()
+            }, Response.ErrorListener { volleyError ->
+                Toast.makeText(
+                    this@TakeSelfie,
+                    "Some error occurred -> $volleyError",
+                    Toast.LENGTH_LONG
+                ).show()
                 // debugging
                 Log.e("Volley Error-----------", "${volleyError.cause}")
                 Log.e("Volley Error-----------", "${volleyError.message}")

@@ -19,7 +19,7 @@
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:background="#5cbc60"
+        android:background="#9ABD4A"
         android:foregroundTint="@android:color/black" />
 
     <Button
