@@ -2,18 +2,33 @@ package project.capstone6.acne_diagnosis
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import kotlinx.android.synthetic.main.activity_intro.*
+import me.relex.circleindicator.CircleIndicator3
+import project.capstone6.acne_diagnosis.data.IntroView
+import project.capstone6.acne_diagnosis.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
 
     lateinit var introView: List<IntroView>
+    private lateinit var binding: ActivityIntroBinding
+    private lateinit var viewPager2: ViewPager2
+    private lateinit var btn_start_app: Button
+    private lateinit var circleIndicator: CircleIndicator3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_intro)
+
+        //setContentView(R.layout.activity_intro)
+        binding = ActivityIntroBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding.root)
+
+        btn_start_app = binding.btnStartApp
+        viewPager2 = binding.viewPager2
+        circleIndicator = binding.circleIndicator
 
         addToIntroView()
 
@@ -40,7 +55,7 @@ class IntroActivity : AppCompatActivity() {
         btn_start_app.visibility = View.VISIBLE
 
         btn_start_app.animate().apply {
-            duration = 1400
+            duration = 1600
             alpha(1f)
 
             btn_start_app.setOnClickListener {
@@ -56,7 +71,7 @@ class IntroActivity : AppCompatActivity() {
 
         //Create some items that you want to add to your viewpager
         introView = listOf(
-            IntroView(getString(R.string.intro1), R.drawable.logo1),
+            IntroView(getString(R.string.intro1), R.drawable.logo08),
             IntroView(getString(R.string.intro2), R.drawable.ic_compare),
             IntroView(getString(R.string.intro3), R.drawable.ic_camera),
             IntroView(getString(R.string.intro4), R.drawable.ic_app),

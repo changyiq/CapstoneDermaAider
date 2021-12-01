@@ -5,9 +5,12 @@
       <map>
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable-v24/ic_app.xml" value="0.2703125" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable-v24/ic_food_bank.xml" value="0.2703125" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable/frame.xml" value="0.22916666666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/drawable/round_button.xml" value="0.13148148148148148" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_ads.xml" value="0.13020833333333334" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_intro.xml" value="0.152" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_result.xml" value="0.15760869565217392" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_take_picture.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/activity_take_selfie.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/layout/intro_item_page.xml" value="0.21784420289855072" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/02 Capstone/CapstoneDermaAider/app/src/main/res/menu/menu.xml" value="0.15260416666666668" />

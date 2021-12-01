@@ -8,12 +8,14 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
@@ -28,7 +30,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_intro.*
-import project.capstone6.acne_diagnosis.databinding.ActivityTakeSelfieBinding
+import project.capstone6.acne_diagnosis.databinding.ActivityTakePictureBinding
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.security.SecureRandom
@@ -41,9 +43,9 @@ private const val FILE_NAME = "selfie"
 class TakeSelfie : AppCompatActivity() {
 
     //val TAG = "TakeSelfie"
-    private lateinit var binding2: ActivityTakeSelfieBinding
-    private lateinit var btnTakeSelfie: Button
-    private lateinit var btnDiagnosis: Button
+    private lateinit var binding2: ActivityTakePictureBinding
+    private lateinit var btnTakePicture: Button
+    private lateinit var btnIdentify: Button
     private lateinit var imageView: ImageView
     private lateinit var photoFile: File
     private lateinit var fileProvider: Uri
@@ -66,12 +68,15 @@ class TakeSelfie : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding2 = ActivityTakeSelfieBinding.inflate(LayoutInflater.from(this))
+        binding2 = ActivityTakePictureBinding.inflate(LayoutInflater.from(this))
         setContentView(binding2.root)
 
-        btnTakeSelfie = binding2.btnTakeSelfie
-        btnDiagnosis = binding2.btnDiagnosis
+        btnTakePicture = binding2.btnTakePicture
+        btnIdentify = binding2.btnIdentify
         imageView = binding2.imageView
+
+        //dynamically display the image
+        animationImageRotate()
 
         responseFromApi = ""
 
@@ -83,9 +88,9 @@ class TakeSelfie : AppCompatActivity() {
         subDir = ""
 
         //click the button to invoke an intent to take a selfie
-        btnTakeSelfie.setOnClickListener() {
+        btnTakePicture.setOnClickListener() {
 
-            btnDiagnosis.visibility = View.VISIBLE
+            btnIdentify.visibility = View.VISIBLE
 
             val takeSelfieIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             photoFile = getPhotoFile(FILE_NAME)
@@ -99,9 +104,12 @@ class TakeSelfie : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_LONG).show()
             }
+
+            //
+            animationImageFadeOut()
         }
 
-        btnDiagnosis.setOnClickListener {
+        btnIdentify.setOnClickListener {
 
             if (subDir != "" && subDir != null) {
 
@@ -142,17 +150,17 @@ class TakeSelfie : AppCompatActivity() {
                 //Toast.makeText(this,"Please take selfie for skin, or check for your history analysis.",Toast.LENGTH_LONG).show()
             }
 
-            btnDiagnosis.visibility = View.GONE
+            btnIdentify.visibility = View.GONE
         }
     }
 
-    //to create a file for the selfie
+    //to create a file for the picture
     private fun getPhotoFile(fileName: String): File {
         val storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
 
-    //to Retrieve the selfie， display it in an ImageView and upload into Firebase cloud
+    //to Retrieve the picture， display it in an ImageView and upload into Firebase cloud
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_FROM_CAMERA && resultCode == Activity.RESULT_OK) {
 
@@ -160,12 +168,15 @@ class TakeSelfie : AppCompatActivity() {
             takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
             imageView.setImageBitmap(takenImage)
 
+            //
+            animationImageFadeIn()
+
             //uploadImage(this, fileProvider)
             subDir = FirebaseStorageManager().uploadImage(this, fileProvider)
             fullDir = "gs://acne-diagnosis-6a653.appspot.com/" + subDir
             Toast.makeText(this, "Selfie upload to Firebase", Toast.LENGTH_SHORT).show()
 
-            // add image into realtime database
+            // add image into firebase
             // Write a message to the database
             val database = FirebaseDatabase.getInstance()
             val myRef = database.getReference("Users")
@@ -338,5 +349,25 @@ class TakeSelfie : AppCompatActivity() {
         firebaseAuth!!.signOut()
         LoginManager.getInstance().logOut()
         finish()
+    }
+
+    fun animationImageRotate(){
+        imageView.visibility = View.VISIBLE
+        val animationRotate = AnimationUtils.loadAnimation(this, R.anim.rotate)
+        imageView.startAnimation(animationRotate)
+    }
+
+    fun animationImageFadeIn(){
+        imageView.visibility = View.VISIBLE
+        val animationFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
+        imageView.startAnimation(animationFadeIn)
+    }
+
+    fun animationImageFadeOut(){
+        val animationFadeOut = AnimationUtils.loadAnimation(this, R.anim.fade_out)
+        imageView.startAnimation(animationFadeOut)
+        Handler().postDelayed({
+            imageView.visibility = View.GONE
+        }, 1000)
     }
 }

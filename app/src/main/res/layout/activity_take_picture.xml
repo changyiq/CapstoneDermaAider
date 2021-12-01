@@ -7,7 +7,7 @@
     tools:context=".TakeSelfie">
 
     <Button
-        android:id="@+id/btnTakeSelfie"
+        android:id="@+id/btnTakePicture"
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -16,7 +16,7 @@
         android:background="@drawable/round_button"
         android:backgroundTint="@color/purple_500"
         android:elevation="20dp"
-        android:text="@string/take_selfie"
+        android:text="@string/take_picture"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:iconPadding="8dp"
@@ -27,6 +27,7 @@
 
     <ImageView
         android:id="@+id/imageView"
+        android:visibility="visible"
         android:layout_width="320dp"
         android:layout_height="350dp"
         android:layout_marginStart="8dp"
@@ -36,12 +37,12 @@
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTakeSelfie"
+        app:layout_constraintTop_toBottomOf="@+id/btnTakePicture"
         app:srcCompat="@drawable/curology"
         tools:ignore="ContentDescription,ImageContrastCheck" />
 
     <Button
-        android:id="@+id/btnDiagnosis"
+        android:id="@+id/btnIdentify"
         android:layout_width="320dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"

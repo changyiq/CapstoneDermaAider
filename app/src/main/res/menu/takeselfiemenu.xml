@@ -6,7 +6,7 @@
         android:title="Result Page" />
     <item
         android:id="@+id/action_products"
-        android:title="Products recomandation Page" />
+        android:title="Products Recomandation Page" />
     <item
         android:id="@+id/action_intro"
         android:title="Introduction Tutorial Page"/>
