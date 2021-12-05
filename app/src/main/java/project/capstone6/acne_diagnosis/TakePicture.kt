@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -18,6 +19,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -30,7 +32,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_intro.*
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import project.capstone6.acne_diagnosis.databinding.ActivityTakePictureBinding
+import project.capstone6.acne_diagnosis.ml.MobilenetV110224Quant
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.security.SecureRandom
@@ -50,6 +56,11 @@ class TakeSelfie : AppCompatActivity() {
     private lateinit var photoFile: File
     private lateinit var fileProvider: Uri
     private lateinit var takenImage: Bitmap
+    private lateinit var btnSelect: Button
+    private lateinit var btnRecognize: Button
+    private lateinit var tVResult: TextView
+    lateinit var bitmap: Bitmap
+
 
     private lateinit var subDir: String
     private lateinit var fullDir: String
@@ -74,6 +85,11 @@ class TakeSelfie : AppCompatActivity() {
         btnTakePicture = binding2.btnTakePicture
         btnIdentify = binding2.btnIdentify
         imageView = binding2.imageView
+        btnRecognize = binding2.btnRecognize
+        btnSelect = binding2.btnSelect
+        tVResult = binding2.tVResult
+
+        val labels = application.assets.open("label.txt").bufferedReader().use { it.readText() }.split("\n")
 
         //dynamically display the image
         animationImageRotate()
@@ -105,7 +121,7 @@ class TakeSelfie : AppCompatActivity() {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_LONG).show()
             }
 
-            //
+            //call method to dynamically fade-out the image
             animationImageFadeOut()
         }
 
@@ -152,6 +168,39 @@ class TakeSelfie : AppCompatActivity() {
 
             btnIdentify.visibility = View.GONE
         }
+
+        //process selecting image
+        btnSelect.setOnClickListener(View.OnClickListener {
+
+            var intent : Intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+
+            startActivityForResult(intent, 250)
+        })
+
+        //process recognizing image
+        btnRecognize.setOnClickListener(View.OnClickListener {
+            var resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
+            val model = MobilenetV110224Quant.newInstance(this)
+
+            var tbuffer = TensorImage.fromBitmap(resized)
+            var byteBuffer = tbuffer.buffer
+
+            // Creates inputs for reference.
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.UINT8)
+            inputFeature0.loadBuffer(byteBuffer)
+
+            // Runs model inference and gets result.
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            var max = getMax(outputFeature0.floatArray)
+
+            tVResult.setText(labels[max])
+
+            // Releases model resources if no longer used.
+            model.close()
+        })
     }
 
     //to create a file for the picture
@@ -160,15 +209,30 @@ class TakeSelfie : AppCompatActivity() {
         return File.createTempFile(fileName, ".jpg", storageDirectory)
     }
 
+    fun getMax(arr:FloatArray) : Int{
+        var ind = 0;
+        var min = 0.0f;
+
+        for(i in 0..1000)
+        {
+            if(arr[i] > min)
+            {
+                min = arr[i]
+                ind = i;
+            }
+        }
+        return ind
+    }
+
     //to Retrieve the picture， display it in an ImageView and upload into Firebase cloud
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_FROM_CAMERA && resultCode == Activity.RESULT_OK) {
 
             //getting image from the file stored the selfie
             takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-            imageView.setImageBitmap(takenImage)
+            imageView.setImageBitmap(takenImage.rotate(90F))
 
-            //
+            //call method to dynamically fade-in the image
             animationImageFadeIn()
 
             //uploadImage(this, fileProvider)
@@ -194,9 +258,21 @@ class TakeSelfie : AppCompatActivity() {
                     //myRef.child(uid.toString()).child("result").setValue(SymptomEnum.AD)
                 }
             }
-        } else {
+        } else if (requestCode == 250){
+            imageView.setImageURI(data?.data)
+
+            var uri : Uri?= data?.data
+            bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+        }
+        else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    //fixing the rotation issue of camera
+    fun Bitmap.rotate(degrees: Float): Bitmap {
+        val matrix = Matrix().apply { postRotate(degrees) }
+        return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
     }
 
     /**
