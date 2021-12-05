@@ -1,10 +1,5 @@
 package project.capstone6.acne_diagnosis;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +11,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.internal.metrics.Tag;
+import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -35,15 +37,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
+
+import java.util.concurrent.Executor;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -63,6 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
     // Facebook sign in
     private LoginButton fb_loginButton;
+
+    // Fingerprint sign in
+    private Button biometricButton;
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private BiometricPrompt.PromptInfo promptInfo;
 
     // text fields and button for sign up
     private EditText etLoginEmail, etLoginPwd;
@@ -87,7 +94,11 @@ public class LoginActivity extends AppCompatActivity {
 
         google_signin_button = findViewById(R.id.google_signin_button);
         signInButton = findViewById(R.id.googleSignIn);
+
         fb_loginButton = findViewById(R.id.fbLogInButton);
+
+        biometricButton = findViewById(R.id.btnFingerAuth);
+
         etLoginEmail = findViewById(R.id.etLoginEmail);
         etLoginPwd = findViewById(R.id.etLoginPwd);
         btnLogin = findViewById(R.id.btnLogin);
@@ -104,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v== signInButton){
+                if (v == signInButton) {
                     google_signin_button.performClick();
                 }
                 Intent intent = Auth.GoogleSignInApi.getSignInIntent(googleSignInClient.asGoogleApiClient());
@@ -155,15 +166,12 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
-
-
         // check facebook authentication status
         authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                if( currentUser != null){
+                if (currentUser != null) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
                 }
@@ -179,6 +187,46 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        // -----------------------------------Fingerprint Log in-----------------------------
+        // biometric initialization
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(LoginActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Log.i("Biometric Authentication", "Fingerprint login error: " + errString);
+                Toast.makeText(LoginActivity.this, "Fingerprint login error: " + errString, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Log.i("Biometric Authentication", "Fingerprint login succeed!");
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Log.i("Biometric Authentication", "Fingerprint login failed.");
+                Toast.makeText(LoginActivity.this, "Fingerprint login failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // set up bio auth dialog
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Fingerprint Authentication")
+                .setSubtitle("Please use fingerprint to login")
+                .setNegativeButtonText("Use another login method")
+                .build();
+
+        // fingerprint login button listener to show login dialot
+        biometricButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                biometricPrompt.authenticate(promptInfo);
+            }
+        });
         // -----------------------------------Email Log in------------------------------------
         // log in with email
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -275,10 +323,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             updateUI(currentUser);
         }
-
     }
 
     // check activity result
@@ -327,7 +374,7 @@ public class LoginActivity extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Toast.makeText(LoginActivity.this, "Authentication failed." + task.getException(),
                                     Toast.LENGTH_SHORT).show();
-                            Log.e("failed",task.getException().toString());
+                            Log.e("failed", task.getException().toString());
                             updateUI(null);
                         }
                     }
@@ -335,11 +382,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // if log in then go to home page
-    private void updateUI(FirebaseUser user){
-        if(user != null){
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-        }else {
+        } else {
             Toast.makeText(this, "Please log in to continue", Toast.LENGTH_SHORT).show();
         }
     }

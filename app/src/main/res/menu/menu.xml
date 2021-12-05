@@ -6,17 +6,12 @@
         android:title="Check my result" />
     <item
         android:id="@+id/action_analyze"
-        android:title="Analyze my skin condition"/>
+        android:title="Take Picture"/>
     <item
         android:id="@+id/action_intro"
-        android:title="Back to Introduction Page"/>
+        android:title="Introduction Tutorial"/>
     <item
         android:id="@+id/action_exit"
-        android:title="Exit"/>
-
-
-
-
-
+        android:title="Logout"/>
 
 </menu>

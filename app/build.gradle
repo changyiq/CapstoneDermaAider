@@ -96,4 +96,8 @@ dependencies {
     }
 
     implementation 'com.google.android.gms:play-services-ads:19.3.0'
+
+    // fingerprint login
+    implementation 'androidx.biometric:biometric:1.0.1'
+
 }

@@ -1,10 +1,7 @@
 package project.capstone6.acne_diagnosis
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.text.Spanned
@@ -14,20 +11,18 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.AuthFailureError
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.ktx.Firebase
 import project.capstone6.acne_diagnosis.databinding.ActivityResultBinding
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
@@ -107,19 +102,19 @@ class Result : AppCompatActivity() {
         if (receivedImage.isNotEmpty()) {
             getResultFromVolley(receivedImage)
             loadResult()
-        }else{
+        } else {
             loadResult()
         }
 
     }
 
     @SuppressLint("SetTextI18n")
-    private fun getUser(){
+    private fun getUser() {
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email.toString()
         if (user != null && email != null) {
             binding3.tv2.text = "Hi $email"
-        }else{
+        } else {
             binding3.tv2.text = "Please login"
         }
 
@@ -140,7 +135,7 @@ class Result : AppCompatActivity() {
 
         // retriveing old result for exsiting user
         myRef.child(uid.toString()).get().addOnSuccessListener {
-            if(it.child("result").exists()&&it.child("image").exists()) {
+            if (it.child("result").exists() && it.child("image").exists()) {
                 if (!myRef.child(uid!!).child("result").equals("")) {
                     myRef.child(uid.toString()).child("result").get().addOnSuccessListener {
                         if (it.exists()) {
@@ -177,7 +172,8 @@ class Result : AppCompatActivity() {
                                                         )
 
                                                         // pass the url info based on the clicked link
-                                                        val intent = Intent(this, Website::class.java)
+                                                        val intent =
+                                                            Intent(this, Website::class.java)
                                                         hybirdLink1.setOnClickListener() {
                                                             intent.putExtra(
                                                                 "URL",
@@ -192,7 +188,7 @@ class Result : AppCompatActivity() {
                                                             )
                                                             startActivity(intent)
                                                         }
-                                                    }else {
+                                                    } else {
                                                         hybirdLink1.text = setTextHtml(
                                                             "<a href=${getWebsite(symptom)[0]}>${
                                                                 getTitle(symptom)[0]
@@ -237,7 +233,7 @@ class Result : AppCompatActivity() {
                             }
                         }
                     }
-                }else{
+                } else {
                     tv6.visibility = View.VISIBLE
                     skinProblem.text = "You have not made any analysis"
                     Toast.makeText(
@@ -246,9 +242,7 @@ class Result : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
-
-            else if(!it.child("result").exists()) {
+            } else if (!it.child("result").exists()) {
                 Log.w("no result no assessment", "NOOOOOOOO")
                 tv6.visibility = View.VISIBLE
                 skinProblem.text = "You have not made any analysis"
@@ -257,8 +251,7 @@ class Result : AppCompatActivity() {
                     "You have not made any analysis",
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else{
+            } else {
                 Log.w("No result then add result into firebase-------", "check")
                 // Retrieving result value from textView which is from api
                 // resultFromResponse = skinProblem.text.toString()
@@ -313,7 +306,7 @@ class Result : AppCompatActivity() {
                                                 )
                                                 startActivity(intent)
                                             }
-                                        }else {
+                                        } else {
                                             hybirdLink1.text = setTextHtml(
                                                 "<a href=${getWebsite(symptom)[0]}>${
                                                     getTitle(symptom)[0]
@@ -353,17 +346,18 @@ class Result : AppCompatActivity() {
     }
 
     fun setTextHtml(html: String): Spanned {
-        val result: Spanned = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            Html.fromHtml(html)
-        }
+        val result: Spanned =
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(html)
+            }
         return result
     }
 
     // get website links based on the symptom using enum classes
     private fun getWebsite(sym: String): List<String> {
-        when(sym){
+        when (sym) {
             SymptomEnum.AD.symptom -> {
                 linkList = listOf(MedicalResourcesEnum.AD.website)
             }
@@ -371,7 +365,8 @@ class Result : AppCompatActivity() {
                 linkList = listOf(MedicalResourcesEnum.AM.website)
             }
             SymptomEnum.AR.symptom -> {
-                linkList = listOf(MedicalResourcesEnum.AR1.website, MedicalResourcesEnum.AR2.website)
+                linkList =
+                    listOf(MedicalResourcesEnum.AR1.website, MedicalResourcesEnum.AR2.website)
             }
             SymptomEnum.BD.symptom -> {
                 linkList = listOf(MedicalResourcesEnum.BD.website)
@@ -398,7 +393,8 @@ class Result : AppCompatActivity() {
                 linkList = listOf(MedicalResourcesEnum.CTD.website)
             }
             SymptomEnum.MM.symptom -> {
-                linkList = listOf(MedicalResourcesEnum.MM1.website, MedicalResourcesEnum.MM2.website)
+                linkList =
+                    listOf(MedicalResourcesEnum.MM1.website, MedicalResourcesEnum.MM2.website)
             }
             SymptomEnum.NAIL.symptom -> {
                 linkList = listOf(MedicalResourcesEnum.NAIL.website)
@@ -434,12 +430,12 @@ class Result : AppCompatActivity() {
                 linkList = listOf(MedicalResourcesEnum.WM.website)
             }
         }
-        return  linkList
+        return linkList
     }
 
     // get website titles based on the symptom using enum classes
     private fun getTitle(sym: String): List<String> {
-        when(sym){
+        when (sym) {
             SymptomEnum.AD.symptom -> {
                 linkList2 = listOf(MedicalResourcesEnum.AD.title)
             }
@@ -510,7 +506,7 @@ class Result : AppCompatActivity() {
                 linkList2 = listOf(MedicalResourcesEnum.WM.title)
             }
         }
-        return  linkList2
+        return linkList2
     }
 
     /**
@@ -524,8 +520,18 @@ class Result : AppCompatActivity() {
                     val acceptedIssuers: Array<Any?>?
                         get() = arrayOfNulls(0)
 
-                    override fun checkClientTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
-                    override fun checkServerTrusted(certs: Array<X509Certificate?>?, authType: String?) {}
+                    override fun checkClientTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
+                    override fun checkServerTrusted(
+                        certs: Array<X509Certificate?>?,
+                        authType: String?
+                    ) {
+                    }
+
                     override fun getAcceptedIssuers(): Array<X509Certificate> {
                         TODO("Not yet implemented")
                     }
@@ -578,7 +584,7 @@ class Result : AppCompatActivity() {
                     Toast.makeText(this, "Exception: $e", Toast.LENGTH_LONG).show()
                 }
 
-            },Response.ErrorListener { volleyError ->
+            }, Response.ErrorListener { volleyError ->
                 Toast.makeText(
                     this,
                     "Some error occurred -> $volleyError",

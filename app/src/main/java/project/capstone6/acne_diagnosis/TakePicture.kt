@@ -317,7 +317,7 @@ class TakeSelfie : AppCompatActivity() {
     // send http post request to communicate with api and get the response with its header
     fun postImageByVolley(image: Bitmap) {
         // val url2: String = "https://10.0.2.2:5001/api/Image"
-        val url2: String = "https://localhost:44374/api/Image"
+        val url2: String = "https://10.0.2.2:44374/api/Image"
 
         //converting image to bytes/base64 string
         val baos = ByteArrayOutputStream()

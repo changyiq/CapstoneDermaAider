@@ -8,6 +8,8 @@
     tools:context="project.capstone6.acne_diagnosis.LoginActivity">
 
 
+
+
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_signin_button"
         android:layout_width="match_parent"
@@ -22,7 +24,7 @@
         android:id="@+id/googleSignIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="52dp"
         android:backgroundTint="@color/white"
         android:text="Login with Google"
         android:textColor="@color/black"
@@ -32,6 +34,7 @@
         app:iconTint="#00100D0D"
         app:iconTintMode="src_atop"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,16 +43,30 @@
         android:layout_width="216dp"
         android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:elevation="5dp"
         android:paddingLeft="17dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:com_facebook_login_text="LOGIN WITH FACEBOOK"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/googleSignIn" />
+
+
+    <Button
+        android:id="@+id/btnFingerAuth"
+        android:layout_width="216dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:text="Fingerprint login"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fbLogInButton" />
 
     <View
         android:id="@+id/divider1"
@@ -79,7 +96,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="272dp"
         android:layout_marginEnd="190dp"
         android:text="OR"
         android:textColor="@color/black"
@@ -122,13 +139,11 @@
         android:id="@+id/btnLogin"
         android:layout_width="183dp"
         android:layout_height="49dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="@color/com_facebook_button_send_background_color_pressed"
+        android:layout_marginTop="36dp"
         android:text="Login"
         android:textAlignment="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etLoginPwd" />
 

@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_result"
-        android:title="Result Page" />
+        android:title="Check my result" />
     <item
         android:id="@+id/action_products"
-        android:title="Products Recomandation Page" />
+        android:title="Products Recommendation" />
     <item
         android:id="@+id/action_intro"
-        android:title="Introduction Tutorial Page"/>
+        android:title="Introduction Tutorial"/>
     <item
         android:id="@+id/action_exit"
-        android:title="Exit"/>
+        android:title="Logout"/>
 
 </menu>
