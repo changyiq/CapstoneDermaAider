@@ -12,16 +12,13 @@ import project.capstone6.acne_diagnosis.data.IntroView
 import project.capstone6.acne_diagnosis.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {
-
     lateinit var introView: List<IntroView>
     private lateinit var binding: ActivityIntroBinding
     private lateinit var viewPager2: ViewPager2
     private lateinit var btn_start_app: Button
     private lateinit var circleIndicator: CircleIndicator3
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         //setContentView(R.layout.activity_intro)
         binding = ActivityIntroBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
@@ -29,12 +26,9 @@ class IntroActivity : AppCompatActivity() {
         btn_start_app = binding.btnStartApp
         viewPager2 = binding.viewPager2
         circleIndicator = binding.circleIndicator
-
         addToIntroView()
-
         viewPager2.adapter = ViewPagerIntroAdapter(introView)
         viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
         circleIndicator.setViewPager(viewPager2)
 
         viewPager2.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -68,7 +62,6 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun addToIntroView() {
-
         //Create some items that you want to add to your viewpager
         introView = listOf(
             IntroView(getString(R.string.intro1), R.drawable.logo08),

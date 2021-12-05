@@ -178,7 +178,7 @@ class TakeSelfie : AppCompatActivity() {
             startActivityForResult(intent, 250)
         })
 
-        //process recognizing image
+        //process labelling image
         btnRecognize.setOnClickListener(View.OnClickListener {
             var resized = Bitmap.createScaledBitmap(bitmap, 224, 224, true)
             val model = MobilenetV110224Quant.newInstance(this)
