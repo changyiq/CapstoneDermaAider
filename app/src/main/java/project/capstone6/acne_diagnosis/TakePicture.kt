@@ -230,7 +230,8 @@ class TakeSelfie : AppCompatActivity() {
 
             //getting image from the file stored the selfie
             takenImage = BitmapFactory.decodeFile(photoFile.absolutePath)
-            imageView.setImageBitmap(takenImage.rotate(90F))
+            bitmap = takenImage
+            imageView.setImageBitmap(takenImage.rotate(0F))
 
             //call method to dynamically fade-in the image
             animationImageFadeIn()
