@@ -1,3 +1,16 @@
+/*
+ * Name: Xiaohong Deng
+ * Student ID: 991517517
+ * Assignment: Capstone Project - DermaAider APP
+ * Dec 12, 2021
+ *
+ * Description of TakeSelfie class:
+ * This activity is to take picture or select a picture, upload the picture to firebase,
+ * and lable the picture using TensorFlow ML
+ *
+ * @author dengxiao
+* */
+
 package project.capstone6.acne_diagnosis
 
 import android.annotation.SuppressLint
@@ -428,6 +441,7 @@ class TakeSelfie : AppCompatActivity() {
         finish()
     }
 
+    //process animation
     fun animationImageRotate(){
         imageView.visibility = View.VISIBLE
         val animationRotate = AnimationUtils.loadAnimation(this, R.anim.rotate)

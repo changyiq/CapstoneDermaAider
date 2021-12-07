@@ -1,3 +1,16 @@
+/*
+ * Name: Xiaohong Deng
+ * Student ID: 991517517
+ * Assignment: Capstone Project - DermaAider APP
+ * Dec 12, 2021
+ *
+ * Description of ViewPagerIntroAdapter class:
+ * This is to create a ViewModel to provide a string information to UI and
+ * create ViewPagerIntroAdapter processes implementation for the recyclerview.
+ *
+ * @author dengxiao
+* */
+
 package project.capstone6.acne_diagnosis
 
 import android.view.LayoutInflater

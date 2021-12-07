@@ -1,3 +1,15 @@
+/*
+ * Name: Xiaohong Deng
+ * Student ID: 991517517
+ * Assignment: Capstone Project - DermaAider APP
+ * Dec 12, 2021
+ *
+ * Description of FirebaseStorageManager class:
+ * This activity is to upload image to firebase
+ *
+ * @author dengxiao
+* */
+
 package project.capstone6.acne_diagnosis
 
 import android.app.ProgressDialog

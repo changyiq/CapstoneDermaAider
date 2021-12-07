@@ -1,3 +1,15 @@
+/*
+ * Name: Xiaohong Deng
+ * Student ID: 991517517
+ * Assignment: Capstone Project - DermaAider APP
+ * Dec 12, 2021
+ *
+ * Description of IntroActivity class:
+ * This activity is to use ViewPager2 to slide the APP tutorial pages.
+ *
+ * @author dengxiao
+* */
+
 package project.capstone6.acne_diagnosis
 
 import android.content.Intent

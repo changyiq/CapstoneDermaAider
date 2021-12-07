@@ -1,3 +1,15 @@
+/*
+ * Name: Xiaohong Deng
+ * Student ID: 991517517
+ * Assignment: Capstone Project - DermaAider APP
+ * Dec 12, 2021
+ *
+ * Description of MainActivity class:
+ * This activity is to start dermaAider APP and trigger the IntroActivity for first-time users
+ *
+ * @author dengxiao
+* */
+
 package project.capstone6.acne_diagnosis
 
 import android.content.Intent
@@ -51,6 +63,4 @@ class MainActivity : AppCompatActivity() {
         val sp = getSharedPreferences("SHARED_PREFS", MODE_PRIVATE)
         userFirstTime = sp.getBoolean("BOOLEAN_FIRST_TIME", true)
     }
-
-
 }
