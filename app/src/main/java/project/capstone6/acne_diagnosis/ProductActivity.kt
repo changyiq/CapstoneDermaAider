@@ -15,6 +15,7 @@ import com.google.android.gms.ads.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import project.capstone6.acne_diagnosis.Intro.IntroActivity
 
 class ProductActivity : AppCompatActivity() {
 

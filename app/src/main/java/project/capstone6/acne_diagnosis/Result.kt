@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import project.capstone6.acne_diagnosis.Intro.IntroActivity
 import project.capstone6.acne_diagnosis.databinding.ActivityResultBinding
 import java.security.SecureRandom
 import java.security.cert.X509Certificate

@@ -10,7 +10,7 @@
  * @author dengxiao
 * */
 
-package project.capstone6.acne_diagnosis.data
+package project.capstone6.acne_diagnosis.Intro
 
 data class IntroView(val description: String, val image: Int) {
 }

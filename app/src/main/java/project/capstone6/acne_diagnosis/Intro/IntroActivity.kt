@@ -10,7 +10,7 @@
  * @author dengxiao
 * */
 
-package project.capstone6.acne_diagnosis
+package project.capstone6.acne_diagnosis.Intro
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,8 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import me.relex.circleindicator.CircleIndicator3
-import project.capstone6.acne_diagnosis.data.IntroView
+import project.capstone6.acne_diagnosis.MainActivity
+import project.capstone6.acne_diagnosis.R
 import project.capstone6.acne_diagnosis.databinding.ActivityIntroBinding
 
 class IntroActivity : AppCompatActivity() {

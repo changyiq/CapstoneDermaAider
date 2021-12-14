@@ -48,6 +48,7 @@ import kotlinx.android.synthetic.main.activity_intro.*
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import project.capstone6.acne_diagnosis.Intro.IntroActivity
 import project.capstone6.acne_diagnosis.databinding.ActivityTakePictureBinding
 import project.capstone6.acne_diagnosis.ml.MobilenetV110224Quant
 import java.io.ByteArrayOutputStream

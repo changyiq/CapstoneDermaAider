@@ -14,14 +14,8 @@ package project.capstone6.acne_diagnosis
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.facebook.login.LoginManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
+import project.capstone6.acne_diagnosis.Intro.IntroActivity
 
 class MainActivity : AppCompatActivity() {
 

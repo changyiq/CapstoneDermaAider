@@ -11,14 +11,14 @@
  * @author dengxiao
 * */
 
-package project.capstone6.acne_diagnosis
+package project.capstone6.acne_diagnosis.Intro
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.intro_item_page.view.*
-import project.capstone6.acne_diagnosis.data.IntroView
+import project.capstone6.acne_diagnosis.R
 
 class ViewPagerIntroAdapter(introViews: List<IntroView>) :
     RecyclerView.Adapter<ViewPagerIntroAdapter.IntroViewHolder>() {
